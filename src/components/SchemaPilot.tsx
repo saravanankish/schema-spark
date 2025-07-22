@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChatInterface } from "./ChatInterface";
 import { SchemaDisplay } from "./SchemaDisplay";
 
-export const SchemaSpark = () => {
+export const SchemaPilot = () => {
   const [schema, setSchema] = useState("");
   const [erd, setErd] = useState("");
   const [queries, setQueries] = useState<string[]>([]);

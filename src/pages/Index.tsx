@@ -1,7 +1,7 @@
-import { SchemaSpark } from "@/components/SchemaSpark";
+import { SchemaPilot } from "@/components/SchemaPilot";
 
 const Index = () => {
-  return <SchemaSpark />;
+  return <SchemaPilot />;
 };
 
 export default Index;

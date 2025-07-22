@@ -66,24 +66,29 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
             <p className="text-sm text-muted-foreground">Your optimized database structure</p>
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => copyToClipboard(schema, "Schema")}
-              className="gap-2"
-            >
-              <Copy className="w-4 h-4" />
-              Copy
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => downloadFile(schema, "schema.sql")}
-              className="gap-2"
-            >
-              <Download className="w-4 h-4" />
-              Download
-            </Button>
+            {
+              activeTab === 'schema'
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => copyToClipboard(schema, "Schema")}
+                  className="gap-2"
+                >
+                  <Copy className="w-4 h-4" />
+                  Copy
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => downloadFile(schema, "schema.sql")}
+                  className="gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  Download
+                </Button>
+              </>
+            }
           </div>
         </div>
       </div>

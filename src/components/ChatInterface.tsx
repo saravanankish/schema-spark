@@ -325,7 +325,7 @@ Would you like me to explain any part of the schema or generate additional queri
           </div>
           <div>
             <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Schema Spark
+              Schema Pilot
             </h1>
             <p className="text-sm text-muted-foreground">AI Database Architect</p>
           </div>
