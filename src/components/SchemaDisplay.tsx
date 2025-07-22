@@ -67,7 +67,7 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
           </div>
           <div className="flex gap-2">
             {
-              activeTab === 'schema'
+              activeTab === 'schema' &&
               <>
                 <Button
                   variant="outline"
