@@ -21,7 +21,7 @@ export const ChatInterface = ({ onSchemaGenerated }: ChatInterfaceProps) => {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi! I'm Schema Spark, your AI database architect. Describe your project and I'll generate an optimized database schema with queries and ERD visualization. What kind of application are you building?",
+      content: "Hi! I'm Schema Pilot, your AI database architect. Describe your project and I'll generate an optimized database schema with queries and ERD visualization. What kind of application are you building?",
       timestamp: new Date()
     }
   ]);
