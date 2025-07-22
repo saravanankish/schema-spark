@@ -30,8 +30,21 @@ export const SchemaSpark = () => {
       {/* Mobile Schema Display */}
       <div className="lg:hidden">
         {schema && (
-          <div className="fixed inset-0 bg-background z-50">
-            <SchemaDisplay schema={schema} erd={erd} queries={queries} />
+          <div className="fixed inset-0 bg-background z-50 p-4">
+            <div className="h-full flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold">Generated Schema</h2>
+                <button 
+                  onClick={() => setSchema("")}
+                  className="p-2 hover:bg-muted rounded-md"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <SchemaDisplay schema={schema} erd={erd} queries={queries} />
+              </div>
+            </div>
           </div>
         )}
       </div>
