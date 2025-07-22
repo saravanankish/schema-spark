@@ -99,7 +99,7 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
           <TabsList className="grid w-full grid-cols-3 bg-muted/50 flex-shrink-0">
             <TabsTrigger value="schema" className="gap-2">
               <Code className="w-4 h-4" />
-              SQL Schema
+              Schema
             </TabsTrigger>
             <TabsTrigger value="erd" className="gap-2">
               <Workflow className="w-4 h-4" />

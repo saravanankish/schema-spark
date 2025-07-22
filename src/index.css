@@ -106,7 +106,7 @@ All colors MUST be HSL.
   }
 
   .scrollbar {
-    scrollbar-color: hsl(--border) transparent !important;
+    scrollbar-color: hsl(var(--border)) transparent !important;
   }
 }
 
