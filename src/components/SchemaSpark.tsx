@@ -14,15 +14,15 @@ export const SchemaSpark = () => {
   };
 
   return (
-    <div className="h-screen bg-gradient-background">
+    <div className="h-screen bg-gradient-background overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
         {/* Chat Interface */}
-        <div className="border-r border-border">
+        <div className="border-r border-border h-full overflow-hidden">
           <ChatInterface onSchemaGenerated={handleSchemaGenerated} />
         </div>
         
         {/* Schema Display */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block h-full overflow-hidden">
           <SchemaDisplay schema={schema} erd={erd} queries={queries} />
         </div>
       </div>

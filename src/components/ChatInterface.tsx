@@ -316,7 +316,7 @@ Would you like me to explain any part of the schema or generate additional queri
   };
 
   return (
-    <div className="h-full flex flex-col bg-gradient-background">
+    <div className="h-full flex flex-col bg-gradient-background overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-border bg-card/50 backdrop-blur-sm">
         <div className="flex items-center gap-3">
