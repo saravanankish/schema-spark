@@ -3,15 +3,6 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  scrollbar-color: hsl(var(--primary)) hsl(var(--gradient-background)) !important;
-}
-
-::-webkit-scrollbar-track {
-  background-color: hsl(var(--gradient-background));
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--primary));
 }
 
 .logo {

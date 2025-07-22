@@ -113,7 +113,7 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
 
           <TabsContent value="schema" className="flex-1 mt-4 overflow-hidden">
             <Card className="h-full bg-code-background border-border overflow-hidden">
-              <div className="h-full overflow-auto p-4">
+              <div className="h-full overflow-auto scrollbar p-4">
                 <pre className="text-sm text-foreground font-mono leading-relaxed whitespace-pre-wrap">
                   {schema}
                 </pre>
@@ -128,7 +128,7 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
           </TabsContent>
 
           <TabsContent value="queries" className="flex-1 mt-4 overflow-hidden">
-            <div className="h-full overflow-auto space-y-4 pr-2">
+            <div className="h-full overflow-auto scrollbar space-y-4 pr-2">
               {queries.map((query, index) => (
                 <Card key={index} className="bg-code-background border-border">
                   <div className="p-4">
