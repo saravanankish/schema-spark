@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChatInterface } from "./ChatInterface";
 import { SchemaDisplay } from "./SchemaDisplay";
+import { ResizablePanelGroup, ResizableHandle, ResizablePanel } from "./ui/resizable";
 
 export const SchemaPilot = () => {
   const [schema, setSchema] = useState("");
@@ -15,16 +16,20 @@ export const SchemaPilot = () => {
 
   return (
     <div className="h-screen bg-gradient-background overflow-hidden">
-      <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
+      <div className="h-full">
         {/* Chat Interface */}
-        <div className="border-r border-border h-full overflow-hidden">
-          <ChatInterface onSchemaGenerated={handleSchemaGenerated} />
-        </div>
-        
-        {/* Schema Display */}
-        <div className="hidden lg:block h-full overflow-hidden">
-          <SchemaDisplay schema={schema} erd={erd} queries={queries} />
-        </div>
+        <ResizablePanelGroup
+          direction="horizontal"
+          className="w-full"
+        >
+          <ResizablePanel defaultSize={45} minSize={25} maxSize={60} className="border-r border-border h-full overflow-hidden">
+            <ChatInterface onSchemaGenerated={handleSchemaGenerated} />
+          </ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel className="hidden lg:block h-full overflow-hidden">
+            <SchemaDisplay schema={schema} erd={erd} queries={queries} />
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
       
       {/* Mobile Schema Display */}
