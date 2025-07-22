@@ -89,9 +89,9 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-4 overflow-hidden">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
-          <TabsList className="grid w-full grid-cols-3 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-3 bg-muted/50 flex-shrink-0">
             <TabsTrigger value="schema" className="gap-2">
               <Code className="w-4 h-4" />
               SQL Schema
@@ -106,26 +106,24 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="schema" className="flex-1 mt-4">
-            <Card className="h-full bg-code-background border-border">
-              <div className="p-4 h-full">
-                <pre className="text-sm text-foreground overflow-auto h-full font-mono leading-relaxed whitespace-pre-wrap">
+          <TabsContent value="schema" className="flex-1 mt-4 overflow-hidden">
+            <Card className="h-full bg-code-background border-border overflow-hidden">
+              <div className="h-full overflow-auto p-4">
+                <pre className="text-sm text-foreground font-mono leading-relaxed whitespace-pre-wrap">
                   {schema}
                 </pre>
               </div>
             </Card>
           </TabsContent>
 
-          <TabsContent value="erd" className="flex-1 mt-4">
+          <TabsContent value="erd" className="flex-1 mt-4 overflow-hidden">
             <Card className="h-full bg-card border-border overflow-hidden">
-              <div className="p-4 h-full overflow-auto">
-                <MermaidDiagram chart={erd} className="w-full h-full" />
-              </div>
+              <MermaidDiagram chart={erd} className="w-full h-full" />
             </Card>
           </TabsContent>
 
-          <TabsContent value="queries" className="flex-1 mt-4">
-            <div className="space-y-4 h-full overflow-auto">
+          <TabsContent value="queries" className="flex-1 mt-4 overflow-hidden">
+            <div className="h-full overflow-auto space-y-4 pr-2">
               {queries.map((query, index) => (
                 <Card key={index} className="bg-code-background border-border">
                   <div className="p-4">
