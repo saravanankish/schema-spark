@@ -5,6 +5,14 @@
   text-align: center;
 }
 
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
