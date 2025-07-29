@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Bot, Database, Send, User } from 'lucide-react';
 import moment, { Moment } from 'moment';
 import { useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
 	id: string;
@@ -384,9 +385,9 @@ Would you like me to explain any part of the schema or generate additional queri
 									: 'bg-chat-ai border-border'
 							)}
 						>
-							<p className='text-sm leading-relaxed whitespace-pre-wrap'>
-								{message.content}
-							</p>
+							<div className='text-sm leading-relaxed prose prose-sm prose-invert max-w-none'>
+								<ReactMarkdown>{message.content}</ReactMarkdown>
+							</div>
 							<time className='text-xs text-muted-foreground mt-2 block'>
 								{message.timestamp.format('hh:mm A')}
 							</time>
