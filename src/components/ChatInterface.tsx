@@ -18,7 +18,7 @@ interface Message {
 }
 
 interface ChatInterfaceProps {
-	onSchemaGenerated: (schema: string, erd: string, queries: string[]) => void;
+	onSchemaGenerated: (schema: string, erd: string, queries: string[], showErd: boolean, showQueries: boolean) => void;
 }
 
 export const ChatInterface = ({ onSchemaGenerated }: ChatInterfaceProps) => {
@@ -313,7 +313,7 @@ CREATE INDEX idx_comments_post ON comments(post_id);`,
 		// Simulate AI processing delay
 		setTimeout(() => {
 			const schema = generateSchema(input);
-			onSchemaGenerated(schema.sql, schema.erd, schema.queries);
+			onSchemaGenerated(schema.sql, schema.erd, schema.queries, generateErd, generateQueries);
 
 			const aiResponse: Message = {
 				id: (Date.now() + 1).toString(),
@@ -470,21 +470,23 @@ Would you like me to explain any part of the schema or generate additional queri
 										className='bg-input border-border focus:border-primary'
 									/>
 								</div>
-								<div className='flex items-center space-x-2'>
-									<Checkbox
-										id='generateErd'
-										checked={generateErd}
-										onCheckedChange={checked => setGenerateErd(checked as boolean)}
-									/>
-									<Label htmlFor='generateErd'>Generate ERD table by default</Label>
-								</div>
-								<div className='flex items-center space-x-2'>
-									<Checkbox
-										id='generateQueries'
-										checked={generateQueries}
-										onCheckedChange={checked => setGenerateQueries(checked as boolean)}
-									/>
-									<Label htmlFor='generateQueries'>Generate queries by default</Label>
+								<div className='grid gap-3 pt-2'>
+									<div className='flex items-center space-x-2'>
+										<Checkbox
+											id='generateErd'
+											checked={generateErd}
+											onCheckedChange={checked => setGenerateErd(checked as boolean)}
+										/>
+										<Label htmlFor='generateErd'>Generate ER Diagram</Label>
+									</div>
+									<div className='flex items-center space-x-2'>
+										<Checkbox
+											id='generateQueries'
+											checked={generateQueries}
+											onCheckedChange={checked => setGenerateQueries(checked as boolean)}
+										/>
+										<Label htmlFor='generateQueries'>Generate queries</Label>
+									</div>
 								</div>
 							</div>
 						</DialogContent>

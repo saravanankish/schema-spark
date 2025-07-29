@@ -10,9 +10,11 @@ interface SchemaDisplayProps {
   schema: string;
   erd: string;
   queries: string[];
+  showErd: boolean;
+  showQueries: boolean;
 }
 
-export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
+export const SchemaDisplay = ({ schema, erd, queries, showErd, showQueries }: SchemaDisplayProps) => {
   const [activeTab, setActiveTab] = useState("schema");
 
   const copyToClipboard = (text: string, type: string) => {
@@ -96,19 +98,27 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
       {/* Content */}
       <div className="flex-1 p-4 overflow-hidden">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
-          <TabsList className="grid w-full grid-cols-3 bg-muted/50 flex-shrink-0">
+          <TabsList className={`grid w-full bg-muted/50 flex-shrink-0 ${
+            showErd && showQueries ? 'grid-cols-3' : 
+            showErd || showQueries ? 'grid-cols-2' : 
+            'grid-cols-1'
+          }`}>
             <TabsTrigger value="schema" className="gap-2">
               <Code className="w-4 h-4" />
               Schema
             </TabsTrigger>
-            <TabsTrigger value="erd" className="gap-2">
-              <Workflow className="w-4 h-4" />
-              ERD
-            </TabsTrigger>
-            <TabsTrigger value="queries" className="gap-2">
-              <Zap className="w-4 h-4" />
-              Queries
-            </TabsTrigger>
+            {showErd && (
+              <TabsTrigger value="erd" className="gap-2">
+                <Workflow className="w-4 h-4" />
+                ERD
+              </TabsTrigger>
+            )}
+            {showQueries && (
+              <TabsTrigger value="queries" className="gap-2">
+                <Zap className="w-4 h-4" />
+                Queries
+              </TabsTrigger>
+            )}
           </TabsList>
 
           <TabsContent value="schema" className="flex-1 mt-4 overflow-hidden">
@@ -121,38 +131,42 @@ export const SchemaDisplay = ({ schema, erd, queries }: SchemaDisplayProps) => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="erd" className="flex-1 mt-4 overflow-hidden">
-            <Card className="h-full bg-card border-border overflow-hidden">
-              <MermaidDiagram chart={erd} className="w-full h-full" />
-            </Card>
-          </TabsContent>
+          {showErd && (
+            <TabsContent value="erd" className="flex-1 mt-4 overflow-hidden">
+              <Card className="h-full bg-card border-border overflow-hidden">
+                <MermaidDiagram chart={erd} className="w-full h-full" />
+              </Card>
+            </TabsContent>
+          )}
 
-          <TabsContent value="queries" className="flex-1 mt-4 overflow-hidden">
-            <div className="h-full overflow-auto scrollbar space-y-4 pr-2">
-              {queries.map((query, index) => (
-                <Card key={index} className="bg-code-background border-border">
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-sm font-medium text-foreground">
-                        Query {index + 1}
-                      </h4>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => copyToClipboard(query, `Query ${index + 1}`)}
-                        className="h-8 w-8 p-0"
-                      >
-                        <Copy className="w-3 h-3" />
-                      </Button>
+          {showQueries && (
+            <TabsContent value="queries" className="flex-1 mt-4 overflow-hidden">
+              <div className="h-full overflow-auto scrollbar space-y-4 pr-2">
+                {queries.map((query, index) => (
+                  <Card key={index} className="bg-code-background border-border">
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-medium text-foreground">
+                          Query {index + 1}
+                        </h4>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => copyToClipboard(query, `Query ${index + 1}`)}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Copy className="w-3 h-3" />
+                        </Button>
+                      </div>
+                      <pre className="text-sm text-foreground font-mono leading-relaxed whitespace-pre-wrap">
+                        {query}
+                      </pre>
                     </div>
-                    <pre className="text-sm text-foreground font-mono leading-relaxed whitespace-pre-wrap">
-                      {query}
-                    </pre>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+          )}
         </Tabs>
       </div>
     </div>

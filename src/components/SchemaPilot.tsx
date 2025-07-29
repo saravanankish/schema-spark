@@ -7,11 +7,15 @@ export const SchemaPilot = () => {
   const [schema, setSchema] = useState("");
   const [erd, setErd] = useState("");
   const [queries, setQueries] = useState<string[]>([]);
+  const [showErd, setShowErd] = useState(true);
+  const [showQueries, setShowQueries] = useState(true);
 
-  const handleSchemaGenerated = (newSchema: string, newErd: string, newQueries: string[]) => {
+  const handleSchemaGenerated = (newSchema: string, newErd: string, newQueries: string[], erdEnabled: boolean, queriesEnabled: boolean) => {
     setSchema(newSchema);
     setErd(newErd);
     setQueries(newQueries);
+    setShowErd(erdEnabled);
+    setShowQueries(queriesEnabled);
   };
 
   return (
@@ -27,7 +31,7 @@ export const SchemaPilot = () => {
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel className="hidden lg:block h-full overflow-hidden">
-            <SchemaDisplay schema={schema} erd={erd} queries={queries} />
+            <SchemaDisplay schema={schema} erd={erd} queries={queries} showErd={showErd} showQueries={showQueries} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
@@ -47,7 +51,7 @@ export const SchemaPilot = () => {
                 </button>
               </div>
               <div className="flex-1 overflow-hidden">
-                <SchemaDisplay schema={schema} erd={erd} queries={queries} />
+                <SchemaDisplay schema={schema} erd={erd} queries={queries} showErd={showErd} showQueries={showQueries} />
               </div>
             </div>
           </div>
