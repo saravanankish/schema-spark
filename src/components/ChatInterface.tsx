@@ -9,6 +9,7 @@ import ReactMarkdown from 'react-markdown';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface Message {
 	id: string;
@@ -19,18 +20,11 @@ interface Message {
 
 interface ChatInterfaceProps {
 	onSchemaGenerated: (schema: string, erd: string, queries: string[], showErd: boolean, showQueries: boolean) => void;
+	messages: Message[];
+	setMessages: (messages: Message[] | ((prev: Message[]) => Message[])) => void;
 }
 
-export const ChatInterface = ({ onSchemaGenerated }: ChatInterfaceProps) => {
-	const [messages, setMessages] = useState<Message[]>([
-		{
-			id: '1',
-			role: 'assistant',
-			content:
-				"Hi! I'm Schema Pilot, your AI database architect. Describe your project and I'll generate an optimized database schema with queries and ERD visualization. What kind of application are you building?",
-			timestamp: moment(),
-		},
-	]);
+export const ChatInterface = ({ onSchemaGenerated, messages, setMessages }: ChatInterfaceProps) => {
 	const [input, setInput] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [contextDialogOpen, setContextDialogOpen] = useState(false);
@@ -446,14 +440,23 @@ Would you like me to explain any part of the schema or generate additional queri
 					/>
 					<Dialog open={contextDialogOpen} onOpenChange={setContextDialogOpen}>
 						<DialogTrigger asChild>
-							<Button
-								type='button'
-								variant='outline'
-								size='icon'
-								className='border-border hover:bg-accent transition-smooth'
-							>
-								<Plus className='w-4 h-4' />
-							</Button>
+							<TooltipProvider>
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<Button
+											type='button'
+											variant='outline'
+											size='icon'
+											className='border-border hover:bg-accent transition-smooth'
+										>
+											<Plus className='w-4 h-4' />
+										</Button>
+									</TooltipTrigger>
+									<TooltipContent>
+										<p>Add Context</p>
+									</TooltipContent>
+								</Tooltip>
+							</TooltipProvider>
 						</DialogTrigger>
 						<DialogContent className='sm:max-w-[425px]'>
 							<DialogHeader>
