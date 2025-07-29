@@ -2,10 +2,13 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { Bot, Database, Send, User } from 'lucide-react';
+import { Bot, Database, Plus, Send, User } from 'lucide-react';
 import moment, { Moment } from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface Message {
 	id: string;
@@ -30,6 +33,10 @@ export const ChatInterface = ({ onSchemaGenerated }: ChatInterfaceProps) => {
 	]);
 	const [input, setInput] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
+	const [contextDialogOpen, setContextDialogOpen] = useState(false);
+	const [dbType, setDbType] = useState('');
+	const [generateErd, setGenerateErd] = useState(true);
+	const [generateQueries, setGenerateQueries] = useState(true);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const scrollToBottom = () => {
@@ -437,6 +444,51 @@ Would you like me to explain any part of the schema or generate additional queri
 						className='flex-1 bg-input border-border focus:border-primary transition-smooth'
 						disabled={isLoading}
 					/>
+					<Dialog open={contextDialogOpen} onOpenChange={setContextDialogOpen}>
+						<DialogTrigger asChild>
+							<Button
+								type='button'
+								variant='outline'
+								size='icon'
+								className='border-border hover:bg-accent transition-smooth'
+							>
+								<Plus className='w-4 h-4' />
+							</Button>
+						</DialogTrigger>
+						<DialogContent className='sm:max-w-[425px]'>
+							<DialogHeader>
+								<DialogTitle>Add Context</DialogTitle>
+							</DialogHeader>
+							<div className='grid gap-4 py-4'>
+								<div className='grid gap-2'>
+									<Label htmlFor='dbType'>Database Type</Label>
+									<Input
+										id='dbType'
+										value={dbType}
+										onChange={e => setDbType(e.target.value)}
+										placeholder='e.g., MS SQL, MongoDB, PostgreSQL...'
+										className='bg-input border-border focus:border-primary'
+									/>
+								</div>
+								<div className='flex items-center space-x-2'>
+									<Checkbox
+										id='generateErd'
+										checked={generateErd}
+										onCheckedChange={checked => setGenerateErd(checked as boolean)}
+									/>
+									<Label htmlFor='generateErd'>Generate ERD table by default</Label>
+								</div>
+								<div className='flex items-center space-x-2'>
+									<Checkbox
+										id='generateQueries'
+										checked={generateQueries}
+										onCheckedChange={checked => setGenerateQueries(checked as boolean)}
+									/>
+									<Label htmlFor='generateQueries'>Generate queries by default</Label>
+								</div>
+							</div>
+						</DialogContent>
+					</Dialog>
 					<Button
 						type='submit'
 						disabled={!input.trim() || isLoading}
