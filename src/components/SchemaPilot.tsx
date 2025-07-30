@@ -126,7 +126,6 @@ export const SchemaPilot = () => {
 	};
 
 	const updateThreadMessages = (messages: Message[]) => {
-		console.log(messages);
 		setThreadMessages(prev => ({
 			...prev,
 			[activeThreadId]: messages,
@@ -134,7 +133,6 @@ export const SchemaPilot = () => {
 	};
 
 	const currentMessages = threadMessages[activeThreadId] || [];
-	console.log(currentMessages, threadMessages, activeThreadId);
 
 	return (
 		<SidebarProvider defaultOpen={false}>

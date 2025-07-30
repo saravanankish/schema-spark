@@ -355,7 +355,7 @@ Would you like me to explain any part of the schema or generate additional queri
 
 			setMessages([...messages, aiResponse]);
 			setIsLoading(false);
-		}, 1500);
+		}, 2000);
 	};
 
 	return (
@@ -467,7 +467,6 @@ Would you like me to explain any part of the schema or generate additional queri
 					<Dialog
 						open={contextDialogOpen}
 						onOpenChange={t => {
-							console.log(t);
 							setContextDialogOpen(t);
 						}}
 					>

@@ -104,25 +104,34 @@ export const ThreadSidebar = ({
 												setTitle(e.target.value)
 											}
 											onBlur={() => {
-												if (title && title !== thread.title) {
-													onThreadRename(thread.id, title.trim());
-												} 
+												if (
+													title &&
+													title !== thread.title
+												) {
+													onThreadRename(
+														thread.id,
+														title.trim()
+													);
+												}
 												setRenameThreadId(null);
 												setTitle('');
 											}}
 											className='bg-input h-8 focus-visible:ring-sidebar-primary-foreground/20 rounded-sm'
 										/>
 									) : (
-										<SidebarMenuButton
-											onClick={() =>
-												onThreadSelect(thread.id)
-											}
-											className={cn(
-												activeThreadId === thread.id &&
-													'bg-sidebar-border/10'
-											)}
-										>
-											{truncateTitle(thread.title)}
+										<>
+											<SidebarMenuButton
+												onClick={() =>
+													onThreadSelect(thread.id)
+												}
+												className={cn(
+													activeThreadId ===
+														thread.id &&
+														'bg-sidebar-border/10'
+												)}
+											>
+												{truncateTitle(thread.title)}
+											</SidebarMenuButton>
 											<DropdownMenu>
 												<DropdownMenuTrigger asChild>
 													<SidebarMenuAction>
@@ -170,7 +179,7 @@ export const ThreadSidebar = ({
 													)}
 												</DropdownMenuContent>
 											</DropdownMenu>
-										</SidebarMenuButton>
+										</>
 									)}
 								</SidebarMenuItem>
 							))}
