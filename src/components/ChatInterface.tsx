@@ -6,10 +6,21 @@ import { Bot, Database, Plus, Send, User } from 'lucide-react';
 import moment, { Moment } from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface Message {
 	id: string;
@@ -19,18 +30,30 @@ interface Message {
 }
 
 interface ChatInterfaceProps {
-	onSchemaGenerated: (schema: string, erd: string, queries: string[], showErd: boolean, showQueries: boolean) => void;
+	onSchemaGenerated: (
+		schema: string,
+		erd: string,
+		queries: string[],
+		showErd: boolean,
+		showQueries: boolean
+	) => void;
 	messages: Message[];
-	setMessages: (messages: Message[] | ((prev: Message[]) => Message[])) => void;
+	setMessages: (
+		messages: Message[] | ((prev: Message[]) => Message[])
+	) => void;
 }
 
-export const ChatInterface = ({ onSchemaGenerated, messages, setMessages }: ChatInterfaceProps) => {
+export const ChatInterface = ({
+	onSchemaGenerated,
+	messages,
+	setMessages,
+}: ChatInterfaceProps) => {
 	const [input, setInput] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [contextDialogOpen, setContextDialogOpen] = useState(false);
 	const [dbType, setDbType] = useState('');
-	const [generateErd, setGenerateErd] = useState(true);
-	const [generateQueries, setGenerateQueries] = useState(true);
+	const [generateErd, setGenerateErd] = useState(false);
+	const [generateQueries, setGenerateQueries] = useState(false);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const scrollToBottom = () => {
@@ -300,14 +323,20 @@ CREATE INDEX idx_comments_post ON comments(post_id);`,
 			timestamp: moment(),
 		};
 
-		setMessages(prev => [...prev, userMessage]);
+		setMessages([...messages, userMessage]);
 		setInput('');
 		setIsLoading(true);
 
 		// Simulate AI processing delay
 		setTimeout(() => {
 			const schema = generateSchema(input);
-			onSchemaGenerated(schema.sql, schema.erd, schema.queries, generateErd, generateQueries);
+			onSchemaGenerated(
+				schema.sql,
+				schema.erd,
+				schema.queries,
+				generateErd,
+				generateQueries
+			);
 
 			const aiResponse: Message = {
 				id: (Date.now() + 1).toString(),
@@ -324,7 +353,7 @@ Would you like me to explain any part of the schema or generate additional queri
 				timestamp: moment(),
 			};
 
-			setMessages(prev => [...prev, aiResponse]);
+			setMessages([...messages, aiResponse]);
 			setIsLoading(false);
 		}, 1500);
 	};
@@ -334,9 +363,6 @@ Would you like me to explain any part of the schema or generate additional queri
 			{/* Header */}
 			<div className='p-4 border-b border-border bg-card/50 backdrop-blur-sm'>
 				<div className='flex items-center gap-3'>
-					<div className='w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow'>
-						<Database className='w-5 h-5 text-primary-foreground' />
-					</div>
 					<div>
 						<h1 className='text-xl font-bold bg-gradient-primary bg-clip-text text-transparent'>
 							Schema Pilot
@@ -438,11 +464,17 @@ Would you like me to explain any part of the schema or generate additional queri
 						className='flex-1 bg-input border-border focus:border-primary transition-smooth'
 						disabled={isLoading}
 					/>
-					<Dialog open={contextDialogOpen} onOpenChange={setContextDialogOpen}>
-						<DialogTrigger asChild>
-							<TooltipProvider>
-								<Tooltip>
-									<TooltipTrigger asChild>
+					<Dialog
+						open={contextDialogOpen}
+						onOpenChange={t => {
+							console.log(t);
+							setContextDialogOpen(t);
+						}}
+					>
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<DialogTrigger asChild>
 										<Button
 											type='button'
 											variant='outline'
@@ -451,24 +483,28 @@ Would you like me to explain any part of the schema or generate additional queri
 										>
 											<Plus className='w-4 h-4' />
 										</Button>
-									</TooltipTrigger>
-									<TooltipContent>
-										<p>Add Context</p>
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
-						</DialogTrigger>
+									</DialogTrigger>
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Add Context</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
 						<DialogContent className='sm:max-w-[425px]'>
 							<DialogHeader>
 								<DialogTitle>Add Context</DialogTitle>
 							</DialogHeader>
 							<div className='grid gap-4 py-4'>
 								<div className='grid gap-2'>
-									<Label htmlFor='dbType'>Database Type</Label>
+									<Label htmlFor='dbType'>
+										Database Type
+									</Label>
 									<Input
 										id='dbType'
 										value={dbType}
-										onChange={e => setDbType(e.target.value)}
+										onChange={e =>
+											setDbType(e.target.value)
+										}
 										placeholder='e.g., MS SQL, MongoDB, PostgreSQL...'
 										className='bg-input border-border focus:border-primary'
 									/>
@@ -478,17 +514,29 @@ Would you like me to explain any part of the schema or generate additional queri
 										<Checkbox
 											id='generateErd'
 											checked={generateErd}
-											onCheckedChange={checked => setGenerateErd(checked as boolean)}
+											onCheckedChange={checked =>
+												setGenerateErd(
+													checked as boolean
+												)
+											}
 										/>
-										<Label htmlFor='generateErd'>Generate ER Diagram</Label>
+										<Label htmlFor='generateErd'>
+											Generate ER Diagram
+										</Label>
 									</div>
 									<div className='flex items-center space-x-2'>
 										<Checkbox
 											id='generateQueries'
 											checked={generateQueries}
-											onCheckedChange={checked => setGenerateQueries(checked as boolean)}
+											onCheckedChange={checked =>
+												setGenerateQueries(
+													checked as boolean
+												)
+											}
 										/>
-										<Label htmlFor='generateQueries'>Generate queries</Label>
+										<Label htmlFor='generateQueries'>
+											Generate queries
+										</Label>
 									</div>
 								</div>
 							</div>
